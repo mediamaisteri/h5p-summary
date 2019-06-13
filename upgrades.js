@@ -1,6 +1,6 @@
 var H5PUpgrades = H5PUpgrades || {};
 
-H5PUpgrades['H5P.Summary'] = (function ($) {
+H5PUpgrades['H5P.Summary'] = (function () {
   return {
     1: {
       1: {
@@ -57,7 +57,20 @@ H5PUpgrades['H5P.Summary'] = (function ($) {
         }
 
         finished(null, parameters);
+      },
+      10: function (parameters, finished, extras) {
+        var title;
+
+        if (parameters && parameters.intro) {
+          title = parameters.intro;
+        }
+
+        extras = extras || {};
+        extras.metadata = extras.metadata || {};
+        extras.metadata.title = (title) ? title.replace(/<[^>]*>?/g, '') : ((extras.metadata.title) ? extras.metadata.title : 'Summary');
+
+        finished(null, parameters, extras);
       }
     }
   };
-})(H5P.jQuery);
+})();
